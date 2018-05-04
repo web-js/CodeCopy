@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>微呼百应</title>
+		<link rel="stylesheet" href="../font/iconfont.css" />
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/style.css" />
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.min.js"></script>
+		<script src="../js/common/init.js"></script>
+		<script src="../js/jquery-3.1.1.min.js"></script>
+		
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+	    		width: 100%;
+	    		height: 100%;
+			}
+			body{
+				width: 100%;
+	    		height: 100%;
+			}
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+	</head>
+	<body class="bg-body">
+		<nav id="navbar" class="mui-bar-tab mui-bar">
+			<a v-for="tab in tabsConfig" class="bg-white mui-tab-item" :class="currentPage==tab.id? 'mui-active' : ''"  :data-href="tab.url"  :data-id="tab.id">
+	            <img class="wxz" :src="tab.src"/>
+				<img class="yxz" :src="tab.src1"/>
+				<p v-cloak>{{tab.name}}</p>
+	        </a>
+		</nav>
+	</body>
+	<script src="../js/ctrl/index.js"></script>
+</html>

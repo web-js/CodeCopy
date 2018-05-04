@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>名人推广</title>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/alert.css" />
+		
+		<style type="text/css">
+			html {
+				font-size: 26.67vw;
+			}
+			.mui-btn {
+				font-size: 16px;
+				padding: 8px;
+				margin: 3px;
+			}
+			h5.mui-content-padded {
+				margin-left: 3px;
+				margin-top: 20px !important;
+			}
+			h5.mui-content-padded:first-child {
+				margin-top: 12px !important;
+			}
+			.ui-alert {
+				text-align: center;
+				padding: 20px 10px;
+				font-size: 16px;
+			}
+			[v-clock]{
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="mainVM" v-clock>
+			<div id="header" class="head" style="width: 100%;">
+				<a class="back mui-icon mui-icon-back pull-left font-f" href="javascript:;" v-if="userInfo" style="line-height: 0.43rem;"></a>
+				<i id="share-i" class="icon iconfont icon-fenxiang pull-right font-f" style="font-size: .24rem;" v-if="userInfo"></i>
+			</div>
+			<div id="mrtgdiv" class="mrtgdiv mui-scroll-wrapper">
+					<div class="mui-scroll" style="" :id="resources.id">
+						<div class="mrzp">
+							<img class="width100" style="height: 2.5rem;" :src="resources.big_url" />
+						</div>
+						<div class="mrInfo bg-white">
+							<div class="mrName">
+								<span class="bg-white">{{resources.nickName}}&nbsp;
+									<!--<i v-if="resources.cat_type == 0" class="icon iconfont icon-yfv colorY"></i>-->
+									<!--<i v-if="resources.cat_type == 1||resources.cat_type == 2"  class="icon iconfont icon-yfv font-blue"></i>-->
+								</span>
+							</div>
+							<div style="line-height: 0.21rem;margin-top: .1rem;border-bottom: 1px dashed #e6e6e6;margin:0.1rem 0.15rem !important;;" style="">
+								<span class="font-8 fonts12" style="display: inline-block;width: 100%;">{{resources.content}}
+									<span class="leixing pull-right" style="vertical-align: bottom;">{{resources.zixunName}}</span>
+								</span>
+							</div>
+							<div class="mui-collapse mui-table-view-cell mrState padding0" style="margin-top: 1px;">
+								<a class="lineh4 fonts14 mui-collapse font-34 mui-navigate-right">
+									状态：
+								</a>
+								<div class="mui-text-center mui-collapse-content padding0">
+									<span>{{resources.type1}}</span>
+									<span>{{resources.type2}}</span>
+									<span>{{resources.type3}}</span>
+								</div>
+							</div>
+
+							<!--<div class="mrfw overflow">
+								<span class="fonts14 pull-left lineh4">服务项目：</span>
+								<div class="xiangmu">
+									<span class="lable1" v-for="item in service_label">{{item}}</span>
+								</div>
+							</div>-->
+						</div>
+						<!--cat_type 0 名人 1自媒体 2 活动名人-->
+						<div class="gymr bg-white margint1 ">
+							<div class="gymrTab mui-segmented-control" v-if="(resources.cat_type==0)||(resources.cat_type==2)">
+								<a class="mui-control-item mui-active fonts14 " href="#mxjs">
+									关于名人
+								</a>
+								<a class="mui-control-item fonts14" href="#mxdt">
+									名人动态
+								</a>
+							</div>
+							<div class="gymrTab mui-segmented-control" v-if="resources.cat_type==1">
+								<a class="mui-control-item mui-active fonts14 " href="#mxjs">
+									关于媒体
+								</a>
+								<a class="mui-control-item fonts14" href="#mxdt">
+									媒体动态
+								</a>
+							</div>
+			<!--关于名人-->
+							<div id="mxjs" class="mui-control-content mui-active">
+								<img class="width100" v-for="img in imgList" :src="img" />
+								<p class="fonts12 font-34" style="margin-bottom: 0;">{{resources.conent}}</p>
+							</div>
+			<!--名人动态-->
+							<div id="mxdt" class="mui-control-content">
+								<ul class="informationList padding0-15">
+								<!--普通模式-->
+									<li class="bigPicture" v-for="item in dynamic" v-if="item.new_model == 0" v-bind:id="item.id">
+										<img class="media-object" v-bind:src="item.imgUrl" alt="新闻图片" />
+										<div class="media-body">
+											<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+												{{item.name}}
+											</p>
+											<p class="time">
+												<span v-if="item.isTop == 1" class="hot">热门</span>
+												<span class="fonts12 font-9 lineh16">{{item.createTime}}</span>
+											</p>
+										</div>
+									</li>
+									<!--三图模式-->
+									<li class="figureThree" v-for="item in dynamic" v-if="item.new_model == 1" v-bind:id="item.id">
+										<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+											{{item.name}}
+										</p>
+										<div class="overflow">
+											<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" />
+										</div>
+										<p class="time margin0">
+											<span v-if="item.isTop == 1" class="hot">热门</span>
+											<span class="fonts12 font-9 lineh16" >{{item.createTime}}</span>
+										</p>
+									</li>
+									<!--视频模式-->
+									<li class="video" v-for="item in dynamic" v-if="item.new_model == 3" :id="item.id">
+										<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+											{{item.name}}
+										</p>
+										<div>
+											<img class="width100" :src="item.r_url" alt="视频" style="max-height: 1.96rem;"/>
+											<img class="videoIcon" src="../../img/shipin.png" />
+											<!--<span class="inline fonts12 font-f">02:30</span>-->
+										</div>
+										<p class="fonts12 font-9 lineh22 margin0">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</p>
+									</li>
+									<!--个人模式-->
+									<li class="figureNine" v-for="item in dynamic" v-if="item.new_model == 2" :id="item.id">
+										<div class="media">
+											<img class="media-object" :src="item.r_url" alt="用户头像" style="height: 0.5rem;border-radius: 50%;"/>
+											<div class="media-body">
+												<p class="fonts15 font-34 lineh22">
+													{{item.r_name}}
+													<i class="icon iconfont icon-yfv colorY fonts18"></i>
+												</p>
+												<span class="fonts12 font-8" style="display:block;line-height: 30px;">{{item.name}}</span>
+											</div>
+										</div>
+										<p class="mui-ellipsis-2 fonts16 font-34 zjj1" style="margin-bottom: 0.1rem;">
+											{{item.conent}}
+										</p>
+										<div class="overflow">
+											<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" />
+										</div>
+										<p class="fonts12 font-9 lineh22 margin0">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+			</div>
+		</div>
+		
+	</body>
+</html>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/ctrl/meiti/teacherTG.js"></script>

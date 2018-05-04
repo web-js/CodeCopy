@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>意见反馈</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+				height: 100%;
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="feedbackVM">
+			<header class="font-f">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span id="center" style="margin-left: -0.3rem;">意见反馈</span>
+			</header>
+			<div class="feedbackDiv bg-white" style="margin-top: .5rem;padding: 0.15rem;">
+				<textarea v-model="content" name="" rows="8" cols="" placeholder="请写下您宝贵的意见"></textarea>
+				<button @click="feedback" type="button" value="" class="btn font-f bg-bule fonts16 boxs margint1"/>提交</button>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/mine/feedback.js"></script>
+</html>

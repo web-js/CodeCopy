@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>名人列表</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			html,body{height: 100%;}
+			.redirect{
+				height: 100%;
+				margin-bottom: 0.2rem !important;
+			}
+		</style>
+	</head>
+	<body class="bg-body">
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mrListVM" style="height: 100%;">
+			<header class="font-f">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span style="margin-left: 0.1rem;" id="Tcenter" v-if="type == 0">名人列表</span>
+				<span style="margin-left: 0.1rem;" id="Tcenter" v-if="type == 1">媒体列表</span>
+				<span style="margin-left: 0.1rem;" id="Tcenter" v-if="type == 2">搜索列表</span>
+				<a id="menu1" class="mui-action-menu pull-right font-f" href="#classIfication1" v-if="searchMsg==null">分类</a>
+			</header>
+			<div id="pullrefresh" class="mui-conten mui-scroll-wrapper" style="top: 0.43rem;">
+				<div class="mui-scroll" v-if="searchMsg == null">
+					<ul class="padding0-15 mui-table-view mui-table-view-chevron container redirect bg-body">
+						<li class="mtList bg-white boxs-h" v-for="item in allmingrenList" :id="item.id">
+							<div class="mui-media overflow">
+								<img class="mui-media-object pull-left" :src="item.headUrl" alt="媒体头像" />
+								<div class="mui-media-body pull-left">
+									<p class="fonts15 font-34 lineh24 margin0">{{item.nickName}}
+										<i v-if="item.cat_type == 1" class="icon iconfont icon-yfv font-blue"></i>
+										<i v-if="item.cat_type == 0" class="icon iconfont icon-yfv colorY"></i>
+									</p>
+									<span class="fonts12 font-8 lineh24" style="display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 100%;">{{item.content}}</span>
+								</div>
+								<span class="pull-right leixing">{{item.zixunName}}</span>
+							</div>
+							<div class="biaoqian">
+								<span v-for="item in allmingrenList.service_label">{{item}}</span>
+								<span v-for="(item,index) in item.service_label">{{item}}</span>
+							</div>
+						</li>
+						<li v-if="allmingrenList.length==0" style="">
+							<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>
+						</li>
+					</ul>
+				</div>
+				<div class="mui-scroll" v-if="searchMsg != null">
+					<ul class="padding0-15 mui-table-view mui-table-view-chevron">
+						<li class="mtList bg-white boxs-h" v-for="item in searchListlr" :id="item.id">
+							<div class="mui-media overflow">
+								<img class="mui-media-object pull-left" :src="item.headUrl" alt="媒体头像" />
+								<div class="mui-media-body pull-left">
+									<p class="fonts15 font-34 lineh24 margin0">{{item.nickName}}
+										<i v-if="(item.cat_type == 1)||(item.cat_type == 2)" class="icon iconfont icon-yfv font-blue"></i>
+										<i v-if="item.cat_type == 0" class="icon iconfont icon-yfv colorY"></i>
+									</p>
+									<span class="fonts12 font-8 lineh24" style="display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 100%;">{{item.content}}</span>
+								</div>
+								<span class="pull-right leixing">{{item.zixunName}}</span>
+							</div>
+							<div class="biaoqian">
+								<span v-for="item in allmingrenList.service_label">{{item}}</span>
+								<span v-for="(item,index) in item.service_label">{{item}}</span>
+							</div>
+						</li>
+						<li class="mtList bg-white boxs-h" v-for="item in searchListlm" :id="item.id">
+							<div class="mui-media overflow">
+								<img class="mui-media-object pull-left" v-bind:src="item.headimage_url" alt="媒体头像" />
+								<div class="mui-media-body pull-left">
+									<p class="fonts15 font-34 lineh24 margin0">{{item.nick_name}}
+										<span v-if="item.identify == 1" class="yrz">
+											<i class="icon iconfont icon-v"></i>
+											已认证
+										</span>
+									</p>
+									<span class="fonts12 font-8 lineh24" style="display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 100%;">{{item.content}}</span>
+								</div>
+								<span class="pull-right leixing">{{item.identify}}</span>
+							</div>
+						</li>
+						<li v-if="searchListlr.length==0&&searchListlm.length==0" style="">
+							<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--分类下拉框-->
+			<div id="classIfication1" class="mui-popover" style="top : 60px;">
+				<div class="mui-popover-arrow"></div>
+				<div id="fenlei">
+					<ul class="mui-table-view mui-scroll-wrapper" style="height: 250px;">
+						<div class="mui-scroll">
+							<li class="mui-table-view-cell taxonomy" v-for="item in newstypeList" :id="item.id"><a class="">{{item.name}}</a></li>
+						</div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/meiti/mrList.js"></script>
+	<script src="../../js/loading.js"></script>
+</html>

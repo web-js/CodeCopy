@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>任务广场</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			html,body{
+				height: 96%;
+			}
+		</style>
+	</head>
+	<body class="bg-body">
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="taskSquareVM">
+			<div class="font-f header">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;" v-if="wxy"></a>
+				<span style="margin-left: .7rem;">任务广场</span>
+				<a id="goTaskList" class="pull-right font-f">我的任务</a>
+			</div>
+			<div class="margint43">
+				<div class="bg-white taskSquareDiv">
+					<div class="media overflow">
+						<img v-if="data.headimgurl" class="media-object" :src="data.headimgurl" alt="个人头像" />
+						<img v-else class="media-object" src="../../img/mrtx.png" alt="个人头像" />
+						<div class="media-body">
+							<p class="fonts17 font-f lineh28  marginb1">{{data.nickName}}</p>
+							<span class="font-f fonts13 lineh16 margint1">我的积分：{{data.balance}}</span>
+						</div>
+						<a class="font-f exchange fonts17" id="goConvertibility">去兑换<i class="mui-icon mui-icon-arrowright"></i></a>
+					</div>
+				</div>
+				<div id="pullrefresh"  class="mui-scroll-wrapper" style="top:1.63rem;">
+					<div class="mui-scroll padding0-15">
+						<ul class="taskList">
+							<li class="marginb1 boxs-h bg-white" v-for="item in taskList" :id="item.id" v-bind:data-time="item.task_time">
+								<a class="media" href="javascript:;">
+									<img class="media-object" :src="item.imgUrl" alt="任务图标"/>
+									<div class="media-body">
+										<p class="fonts14 lineh16 margin0">
+											<span class="font-28 mui-ellipsis">{{item.name}}</span>
+											<span class="font-blue pull-right">{{item.bonus}}积分</span>
+										</p>
+										<p class="fonts12 font-6 lineh16" style="margin: 0.19rem 0 0;">
+											剩余：{{item.receiveTotal}}次
+											<span v-if="item.task_type == '0'" class="pull-right fonts10 font-8">
+												<img src="../../img/zhuanfa.png" alt="" />
+												转发互动
+											</span>
+											<span v-if="item.task_type == '1'" class="pull-right fonts10 font-8">
+												<img src="../../img/pingtai.png" alt="" />
+												注册下载
+											</span>
+											<span v-if="item.task_type == '2'" class="pull-right fonts10 font-8">
+												<img src="../../img/yuedu.png" alt="" />
+												其他
+											</span>
+											<!--<span v-if="item.task_type == " class="pull-right fonts10 font-8">
+												<img src="../../img/gongyi.png" alt="" />
+												公益活动
+											</span>-->
+										</p>
+									</div>
+									<span class="mui-icon mui-icon-arrowright"></span>
+								</a>
+							</li>
+						</ul>
+						<div v-if="taskList.length==0" style="">
+							<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 0.685rem);width: 1.37rem;height: 1.62rem;"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../../js/loading.js"></script>
+<script src="../../js/ctrl/task/taskSquare.js"></script>

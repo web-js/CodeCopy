@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>个人媒体列表</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+		</style>
+	</head>
+	<body class="bg-body">
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mainVM" v-clock>
+			<!--<header class="font-f">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span id="center" style="margin-left: -0.3rem;">个人媒体列表</span>
+			</header>-->
+			<div>
+				<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll padding0-15">
+						<ul style="padding-top: 0.01rem;padding-bottom: 0.1rem;">
+							<li class="mtList bg-white boxs-h" v-for="item in media_own" :id="item.id">
+								<div class="mui-media overflow">
+									<img class="mui-media-object pull-left" :src="item.headimage_url" alt="媒体头像" style="height: 0.5rem;"/>
+									<div class="mui-media-body pull-left">
+										<p class="fonts15 font-34 lineh24 margin0">
+											<span class="personalName">{{item.nick_name}}</span>
+											<span v-if="item.state_ == 1" class="yrz">
+												<i class="icon iconfont icon-v" style="position: absolute;"></i>
+												<span style="margin-left: 0.13rem;">已认证</span>
+											</span>
+										</p>
+										<span class="fonts12 font-8 lineh24 mui-ellipsis">{{item.content}}</span>
+									</div>
+									<span class="pull-right leixing">{{item.identify}}</span>
+								</div>
+							</li>
+							<li v-if="media_own.length==0" style="">
+							<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/meiti/personal.js"></script>
+	<script src="../../js/loading.js"></script>
+</html>

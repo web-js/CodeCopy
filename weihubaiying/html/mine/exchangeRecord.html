@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>兑换记录</title>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+				height: 100%;
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="mainVM" v-cloak>
+			<header id="header" class="font-f">
+				<a class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span style="margin-left: -0.1rem;">兑换记录</span>
+			</header>
+			<div id="content" class="margint43 bg-white">
+				<div class="jf_statistics  overflow">
+					<div class="mui-text-center pull-left">
+						<p class="font-blue margin0">{{data.总收入}}</p>
+						<span class="fonts14 font-9">总积分</span>
+					</div>
+					<div class="mui-text-center pull-left">
+						<p class="font-blue margin0">{{data.已兑换}}</p>
+						<span class="fonts14 font-9">已兑换</span>
+					</div>
+				</div>
+				<div class="bg-body" style="height: 0.1rem;"></div>
+				<p class="borderB lineh4 fonts15 font-28 jf_data mui-text-center margin0 padding0-15">
+					<span>日期</span>
+					<span>兑换积分</span>
+					<span>状态</span>
+				</p>
+				<ul class="jf_list padding0-15">
+					<!--<li>
+						<span>17.11.24</span>
+						<span>100</span>
+						<span class="font-blue">审核中</span>
+					</li>
+					<li>
+						<span>17.11.24</span>
+						<span>100</span>
+						<span>已兑换</span>
+					</li>-->
+					<!--兑换记录-->
+					<li v-for="item in lw" :id="item.id">
+						<span>{{item.createTime}}</span>
+						<span>{{item.money}}</span>
+						<span v-if="item.status =='0'" class="font-blue">处理中</span>
+						<span v-else-if="item.status =='1'" class="font-6">已打款</span>
+						<span v-else="item.status =='2'" style="color: #f71c1c;">未通过</span>
+					</li>
+					<p v-if="lw.length == '0'" class="fonts14 font-8 lineh38 mui-text-center">
+						<!--<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:36%;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>-->
+						暂无积分兑换记录！
+					</p>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/mine/exchangeRecord.js"></script>
+</html>

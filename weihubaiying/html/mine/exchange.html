@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>积分兑换</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+				height: 100%;
+				background: #fff;
+			}
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="exchangeVM">
+			<header class="font-f">
+				<a id="back" class="back mui-icon mui-icon-back pull-left font-f" href="javascript:;" style="line-height: 0.43rem;margin-left: 0.1rem;font-size: 0.2rem!important;"></a>
+				<span id="center">积分兑换 </span>
+				<a id="dhjl" class="pull-right font-f">记录</a>
+			</header>
+			<div class="margint43 bg-white">
+				<div class="bg-body account">
+					<div class="bg-white lineh38">
+						<span class="fonts14 font-34">到账账户</span>
+						<span class="pull-right fonts14 font-8" v-cloak>
+							{{bankcard}}
+						</span>
+					</div>
+				</div>
+				<div class="padding0-15 integralInput">
+					<p class="fonts14 font-34 margin0">积分兑换</p>
+					<div>
+						<img src="../../img/jfdh.png" alt="积分" />
+						<input v-model="quantity" class="fonts14" type="number" id="dh_number" value="" placeholder="请输入兑换数量，最低10积分"/>
+					</div>
+					<p class="fonts13">
+						<span class="font-9" v-cloak>可兑换积分{{balance}}，</span><span id="all" class="font-blue">全部兑换</span>
+					</p>
+					<button @click="submit()" class="btn font-f bg-bule fonts18 boxs" type="button" value="">提交</button>
+				</div>
+				<p class="mui-text-center padding1">
+					<a id="dhgz" class="fonts13 underline font-b2">兑换规则</a>
+				</p>
+			</div>
+			<div id="exchangeModel" class="modelDiv exchangeModel mui-hidden" style="display: block;">
+				<div class="tcDiv bg-white">
+					<p class="width100">如何获得积分:</p>
+					<p>在任务广场根据任务要求完成任务并且通过工作人员的审核，可以获得相应的积分。</p>
+					<p>如何兑换积分:</p>
+					<p>通过实名认证后，申请积分兑换。通过工作人员审核后便可获得兑换奖励。审核时间在3—7个工作日。</p>
+					<button class="btn font-f bg-bule fonts18 boxs margint1">确定</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/mine/exchange.js"></script>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<title>活动</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<script src="../../js/loading.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-3.1.1.min.js" type="text/javascript"></script>
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			[v-cloak]{
+				display: none;
+			}
+			.bg{
+				display: inline-block;
+				width: 100%;
+				height: 5.08rem;
+				background: url(../../img/bg2.png) no-repeat;
+				background-size: 100%;
+			}
+			.bg .text1{
+				display: block;
+				width: 100%;
+				height: 100%;
+				margin: 0.52rem auto 0;
+				background: url(../../img/bg1.png) no-repeat;
+				background-size: 100%;
+			}
+			.footer{
+				position: absolute;
+				bottom: 0.12rem;
+				right: 0;
+				width: 100%;
+				z-index: -1;
+			}
+			.footer .logo{
+				display: block;
+				margin: auto;
+				width: 2.2rem;
+				height: 0.75rem;
+				background: url(../../img/logoSlogan.png) no-repeat;
+				background-size: 100%;
+			}
+			.teacherList {
+				margin-bottom: 0.12rem;
+				padding: 0.12rem;
+				border-radius: 0.05rem;
+			}
+			.teacherList .mui-media .mui-media-object {
+				width: 0.5rem;
+				margin-right: 0.1rem;
+				/*height: 0.5rem;*/
+				border-radius: 50%;
+			}
+			.teacherList .mui-media .mui-media-body {
+				width: 60%;
+			}
+			.teacherList .mui-media .mui-media-body i {
+				font-size: 0.145rem;
+			}
+			.shadow{
+				box-shadow: 0px 2px 5px #e5e7e9;
+			}
+		</style>
+	</head>
+	<body>
+		<!--<img src="http://ou3hks27l.bkt.clouddn.com/image/005A8LxCgy1ficis0towej30c80lqq3v68a04569ecf94e37a54406ff9275a413.jpg" alt="" style="visibility: hidden;"/>-->
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mainVM">
+			<div class="mui-scroll-wrapper" style="width: 100%;">
+				<div class="mui-scroll" style="padding: 0">
+				<div class="bg" style="z-index: -1;">
+					<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;" style="line-height: 0.44rem;margin-left: 0.1rem;"></a>
+					<span class="text1"></span>
+				</div>
+					<div style="position:relative;top: -1rem;bottom:0;left: 0;width: 100%;">
+						<ul style="padding:0 0.15rem;">
+							<li class="teacherList bg-white shadow" v-for="item in activity" :id="item.id" v-cloak>
+								<div class="mui-media overflow">
+									<img class="mui-media-object pull-left" :src="item.headUrl" alt="媒体头像" style="height: 0.5rem;"/>
+									<div class="mui-media-body pull-left">
+										<p class="fonts15 font-34 lineh24 margin0">
+											<span class="personalName">{{item.nickName}}</span>
+										</p>
+										<span class="fonts12 font-8 lineh24" style="display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 100%;">{{item.content}}</span>
+									</div>
+									<span class="pull-right leixing">{{item.zixunName}}</span>
+								</div>
+							</li>
+							</ul>
+					</div>
+					<div class="footer">
+						<div v-if="!activity">
+						<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 0.5rem);width: 1.03rem;height: 1.25rem;"/>
+						</div>
+						<div class="logo"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/meiti/teacher.js"></script>
+</html>

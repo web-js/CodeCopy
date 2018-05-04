@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>个人媒体资料</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			[v-cloak]{display: none;}
+		</style>
+	</head>
+	<body class="bg-body">
+		<div id="mainVM" v-cloak>
+			<header id="per_header" class="font-f" style="display: none;">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span style="margin-left: -0.3rem;" id="center">个人媒体资料</span>
+				<span @click="toUpdate" v-if="form == 'homePage'" class="pull-right">更新</span>
+			</header>
+			<div id="personal_box" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+				<div class="personalData">
+					<div class="bg-white mui-media overflow personalInfo overflow">
+						<div class="mui-media overflow">
+							<img class="mui-media-object pull-left" :src="ownInfo.headimage_url" alt="媒体头像" />
+							<div class="mui-media-body pull-left padding1">
+								<p class="fonts17 font-28 lineh24 marginb1">{{ownInfo.nick_name}}
+									<span class="yrz">
+										<i class="icon iconfont icon-v" style="position: absolute;"></i>
+<span style="margin-left: 0.13rem;">已认证</span>
+									</span>
+									
+									<img v-if="ownInfo.sex == '男'" src="../../img/nan.png" alt="男" />
+									<img v-if="ownInfo.sex == '女'" src="../../img/nv.png" alt="女" />
+								</p>
+								<span class="fonts12 font-8 lineh24">{{ownInfo.identify}}</span>
+								<span class="fonts13 font-c lineh24">&nbsp;|&nbsp;</span>
+								<span class="fonts12 font-8 lineh24">{{ownInfo.area}}</span>
+							</div>
+						</div>
+						<div class="personalWord">
+							<p>粉丝关键词：{{ownInfo.keyword}}</p>
+							<p>传播影响力：
+								<img class="a" v-for="star in starAll" src="../../img/starall.png"/>
+								<img class="a" v-if='starhalf==1' src="../../img/starhalf.png"/>
+							</p>
+							<div>
+								<span style="display: inline-block;">社交平台：</span>
+								<img v-if='weixin==1' class="a" src="../../img/weixin1.png" alt="weixin" style="display: inline-block;"/>
+								<img v-if='weibo==1' class="a" src="../../img/weibo.png" alt="weibo" style="display: inline-block;"/>
+								<img v-if='qqkj==1' class="a" src="../../img/gbRes_4.png" alt="qqkongjian" style="display: inline-block;"/>
+								<div v-if='bdtb==1' class="a" style="display: inline-block;width:0.14rem;height:0.14rem;background: #3685ff;border-radius:0.03rem;padding: 0;margin: 0;">
+									<img style="display:block;width: 80%;margin-top: 10%;margin-left: 10%;" src="../../img/bdtb.png" alt="tieba" />
+								</div>
+								<div v-if='taobao==1' class="a" style="display: inline-block;width:0.14rem;height:0.14rem;background: #fc6420;border-radius:0.03rem;">
+									<img style="display:block;width: 94%;margin-top: 10%;" src="../../img/taobao.png" alt="taobao" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bg-white describe">
+					<p class="lineh4 fonts12 font-8 margin0">个人描述：{{ownInfo.content}}</p>
+					<ul>
+						<p>影响力认证</p>
+						<li class="rz_media" v-for="item in Ls">
+							<div class="media-object" v-if='item.name=="百度贴吧"' style="height:0.4rem;background: #3685ff;">
+								<img v-if='item.name=="百度贴吧"' style="width: 0.3rem;margin-top: .05rem;margin-left: 0.05rem;" :src="item.image_url" alt="头像" />
+							</div>
+							<div class="media-object" v-if='item.name=="淘宝"' style="height:0.4rem;background: #fc6420;">
+								<img style="width: 0.36rem;margin-top: .04rem;margin-left: 0.01rem;" :src="item.image_url" alt="头像" />
+							</div>
+							<img v-if='(item.name!="百度贴吧")&&(item.name!="淘宝")' class="media-object" :src="item.image_url" alt="头像" />
+							
+							<div class="media-body">
+								<div>
+									<span class="fonts14 font-28">{{item.name}}</span>
+									<span class="pull-right fonts11 font-blue">
+										<img src="../../img/renzheng2.png" alt="" />
+										已认证
+									</span>
+								</div>
+								<p class="fonts12 lineh22">
+									粉丝量：<span class="font-blue">{{item.fansi_num}}</span>,粉丝关键词：{{item.keyword}}
+								</p>
+								<img v-for="img in item.content" :src="img" alt="" style="width:25%;height: 1rem;"/>
+								<p class="margin0 fonts10 font-8">{{item.creat_time}}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/meiti/personalMedia.js"></script>
+</html>

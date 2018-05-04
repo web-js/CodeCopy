@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>注册</title>
+		<script src="../../js/vue.min.js"></script>
+	    <script src="../../js/mui.min.js"></script>
+	    <script src="../../js/jquery-3.1.1.min.js"></script>
+	    <script src="../../js/common/init.js"></script>
+	    <script src="../../js/libs/crypto/aes.js"></script>
+	    <script src="../../js/libs/crypto/mode-cfb-min.js"></script>
+	    <script src="../../js/libs/crypto/mode-ctr-min.js"></script>
+	    <script src="../../js/libs/crypto/mode-ecb-min.js"></script>
+	    <script src="../../js/libs/crypto/mode-ofb-min.js"></script>
+	    <script src="../../js/libs/crypto/pad-ansix923-min.js"></script>
+	    <script src="../../js/libs/crypto/pad-iso10126-min.js"></script>
+	    <script src="../../js/libs/crypto/pad-iso97971-min.js"></script>
+	    <script src="../../js/libs/crypto/pad-nopadding-min.js"></script>
+	    <script src="../../js/libs/crypto/pad-zeropadding-min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+		</style>
+	</head>
+	<body class="bg-white">
+		<header id="header" class="font-f">
+			<a class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+			<span style="margin-left: -0.3rem;">注册</span>
+		</header>
+		<div id="regForm" class="shuru margint43 padding0-16 zhuceDiv">
+			<div class="zh">
+				<label class="fonts15 font-34 inline" for="">+86
+					<!--<select name="" class="margin0 padding0 fonts15 sestyle lineh4">
+						<option value="">+86</option>
+						<option value="">2</option>
+					</select>-->
+				</label>
+				<input id="a1" v-model="mobile" class="fonts15 font-34" type="tel" placeholder="请输入手机号" style="width: 45% !important;" pattern="^1[3|4|5|8][0-9]\d{4,8}$"/>
+			</div>
+			<div class="zh">
+				<label class="fonts15 font-34 inline" for="">验证码</label>
+				<input id="yzm" value="" v-model="ranCode" class="fonts15 font-34" type="text" placeholder="请输入验证码" style="width: 45%!important;"/>
+				<button @click="getCode" id="reg-rancode" class="yzm bg-bule font-f fonts13 pull-right">获取验证码</button>
+			</div>
+			<div class="zh">
+				<label class="fonts15 font-34 inline" for="">密码</label>
+				<input id="mima" value="" v-model="password" class="fonts15 font-34" type="password" placeholder="请输入您的密码"/>
+			</div>
+			<div class=" lineh4 fonts13 font-8 zjj1" style="margin-bottom: 0.15rem;">
+				注册即同意
+				<a href="../agreement/agreement.html" class="underline">微呼百应用户注册协议</a>
+			</div>
+			<button type="button" @click="submitForm" value="" class="btn font-f bg-bule fonts16 boxs"/>注册</button>
+		</div>
+	</body>
+	<script src="../../js/ctrl/login/zhuce.js"></script>
+</html>

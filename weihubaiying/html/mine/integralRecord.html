@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>积分记录</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+				height: 100%;
+				background: #f2f2f2;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mainVM">
+			<!--<header class="font-f">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span id="center" style="margin-left: -0.3rem;">积分记录</span>
+			</header>-->
+			<div class="bg-white">
+				<ul class="integral_list padding0-15">
+					<li v-for="item in lw" :id="item.id">
+						<p class="margin0 fonts15 font-34 lineh24">{{item.jifen_name}}</p>
+						<p class="margin0 fonts12 font-9 lineh24">{{item.addtime}}</p>
+						<span v-if="item.status == '1'" class="font-blue">+{{item.money}}</span>
+						<span v-else class="font-34">-{{item.money}}</span>
+					</li>
+				</ul>
+				<p v-if="lw.length == 0" class="">
+					<img src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:20%;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>
+				</p>
+			</div>
+			
+		</div>
+	</body>
+	<script src="../../js/ctrl/mine/integralRecord.js"></script>
+	<script src="../../js/loading.js"></script>
+</html>

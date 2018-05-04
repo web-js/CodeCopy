@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>任务详情</title>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/mui.previewimage.css" />
+		<style type="text/css">
+			html {
+				font-size: 26.67vw;
+				background: #fff;
+			}
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+		<style type="text/css">
+			a {
+				color: #fff;
+			}
+		</style>
+	</head>
+
+	<body class="bg-body">
+		<div id="mainVM" v-cloak>
+			<header id="header" class="font-f">
+				<span id="back" class="back pull-left font-f" v-if='userInfo' style="display:block;background:url(../../img/back.png) no-repeat;width:0.24rem;height:0.24rem;background-size:auto 100%;margin: 0.1rem;"></span>
+				<span>任务详情</span>
+				<span v-if='userInfo' id="share-i" class="pull-right" style="display:block;width: 0.24rem;height: 0.24rem;background: url(../../img/share.png) no-repeat;background-size: 100% 100%;margin: 0.1rem;"></span>
+			</header>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div id="content" class="margint43">
+						<div class="bg-body taskCard">
+							<div class="media bg-white boxs-h">
+								<img class="media-object" :src="task.imgUrl" alt="任务图标" />
+								<div class="media-body">
+									<p class="fonts14 lineh16 margin0">
+										<span class="font-28 mui-ellipsis">{{task.name}}</span>
+										<span class="font-blue pull-right">{{task.bonus}}积分</span>
+									</p>
+									<p class="fonts12 font-6 lineh16" style="margin: 0.21rem 0 0;">
+										剩余：{{task.receiveTotal}}次
+										<span v-if="task.task_type == '0'" class="pull-right fonts10 font-8">
+											<img src="../../img/zhuanfa.png" alt="" />
+											转发互动
+										</span>
+										<span v-if="task.task_type == '1'" class="pull-right fonts10 font-8">
+											<img src="../../img/pingtai.png" alt="" />
+											下载注册
+										</span>
+										<span v-if="task.task_type == '2'" class="pull-right fonts10 font-8">
+											<img src="../../img/yuedu.png" alt="" />
+											其他
+										</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="bg-white taskIntroduction">
+						<div>
+							<p class="fonts14 font-34">任务介绍</p>
+							<p class="fonts13 font-6 margin0 lineh22 zjj1">
+								{{task.content}}
+							</p>
+						</div>
+						<div>
+							<p class="fonts14 font-34">审核时间</p>
+							<p class="fonts13 font-6 margin0 lineh22">
+								提交审核后{{task.task_time}}小时
+							</p>
+						</div>
+						<div>
+							<p class="fonts14 font-34">任务引导</p>
+							<p class="fonts13 font-6 margin0 lineh22">
+								{{task.task_guidance}}
+							</p>
+							<div class="guidanceImg">
+								<img id="smallImg" class="smallImg" v-for="img in imgList" :src="img" />
+							</div>
+							<img id="bigImg" style="display:none;position: absolute;top: 20%;left: 20%;width: 2.5rem;height: 4rem;"/>
+							<!--<p class="fonts13 font-6 margin0 lineh22">
+								2.好友通过此链接报名成功,分享者还可秒得0.5元!
+							</p>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div v-if="userInfo" class="footer">
+				<!--任务领取按钮-->
+				<button v-if="(lingqu==0)&&(task.receiveTotal!=0)" @click="receive" id="notFinished" class="btn font-f bg-bule fonts16 borderR0 lineh49">领取任务</button><!--(type !=null)||-->
+				<!--任务领取后 按钮-->
+				<div v-if="lingqu==1" id="taskReceive" class="deleteTask overflow bg-white" ><!--v-if="lingqu==1"-->
+					<a @click="giveUp" class="fonts17 font-9 mui-text-center"><!--v-if="task.status ==0"-->
+						<img src="../../img/deleta.png" alt="删除" />放弃任务
+					</a>
+					<button class="btn font-f bg-bule fonts16 borderR0 lineh49 already">任务已领取，查看进度</button>
+				</div>
+				<div v-if="(task.receiveTotal==0)&&(taskStatus==1)&&(lingqu==0)" @click="taskOver" class="endOfTask font-f fonts16">
+					任务已结束
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/ctrl/task/taskDetails.js"></script>

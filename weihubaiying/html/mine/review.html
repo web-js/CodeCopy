@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>审核状态</title>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="reviewVM">
+			<header class="font-f">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span id="center" style="margin-left: -.15rem!important;">审核状态</span>
+			</header>
+			<!--正在审核中-->
+			<div style="display: block;" v-if='id==1'>
+				<div style="display: block;width: 2.94rem;height: 2.135rem;margin: 1rem auto;">
+				<img style="width: 100%;height: 100%;" src="../../img/reviewing.png"/>
+			</div>
+				<button @click="reviewing()" style="display: block;width: 80%;height: .45rem;margin: auto;background: #2f78ff;color: #fff;font-size: .2rem;">确定</button>
+			</div>
+			
+			<!--审核通过-->
+			<div v-if='id==2'>
+				<div style="display: block;width: 2.745rem;height: 2rem;margin: 1rem auto;">
+				<img style="width: 100%;height: 100%;" src="../../img/review.png"/>
+			</div>
+				<button @click="reviewOk()" style="display: block;width: 80%;height: .45rem;margin: auto;background: #2f78ff;color: #fff;font-size: .2rem;">确定</button>
+			</div>
+			
+			<!--审核未通过-->
+			<div v-if='id==3'>
+				<div style="display: block;width: 1.815rem;height: 1.7rem;margin: 1rem auto .15rem;">
+					<img style="width: 100%;height: 100%;" src="../../img/unreview.png"/>
+				</div>
+				<div style="display: block;width: 60%;margin: 0 auto .6rem;font-size: 0.12rem;text-align: center;color: #b2b2b2;">
+					<span style="display: block;width: 100%;">未通过原因为{{feedback}}</span>
+					<span style="display: block;width: 100%;">如有问题请咨询客服13345123201</span>
+				</div>
+				<button @click="unreview()" style="display: block;width: 80%;height: .45rem;margin: auto;background: #2f78ff;color: #fff;font-size: .2rem;">重新审核</button>
+			</div>
+			
+		</div>
+		
+		
+	</body>
+</html>
+
+<script src="../../js/ctrl/mine/review.js"></script>

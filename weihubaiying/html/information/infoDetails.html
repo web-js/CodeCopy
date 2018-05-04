@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>资讯详情</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html {
+				font-size: 26.67vw;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			video::-internal-media-controls-download-button{display: none!important;}
+			/*video::-webkit-media-controls-enclosure{ overflow: hidden; }*/
+			/*video::-webkit-media-controls-panel{ width: 122%; }*/
+			#conent p{
+				padding: 0!important;
+				margin: 0!important;
+				text-indent:inherit!important;			}
+			#conent,#conent div,#conent h1,#conent span,#conent p,#conent p a,#conent p span{
+				font-family: 'Helvetica Neue',Helvetica,sans-serif!important;
+				line-height:0.27rem!important;
+				font-size: 0.18rem!important;
+				color: #222!important;
+			}
+			#conent p img,#conent img,#conent span,#conent p img{
+				width: 100%!important;
+				height: 100%!important;
+			}
+		</style>
+	</head>
+	<body class="bg-body" @unload="checkLeave()">
+		
+		<div id="mainVM" v-cloak>
+			<header id="header" class="font-f">
+				<span class="back pull-left font-f" v-if='userInfo' style="display:block;background:url(../../img/back.png) no-repeat;width:0.24rem;height:0.24rem;background-size:auto 100%;margin: 0.1rem;"></span>
+				<span v-if='userInfo' id="share-i" class="pull-right" style="display:block;width: 0.24rem;height: 0.24rem;background: url(../../img/share.png) no-repeat;background-size: 100% 100%;margin: 0.1rem;"></span>
+			</header>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+			<div id="content" class="margint43 padding0-15 infoDetailsDiv bg-white boxs-h">
+				<div class="content margin0 paddingb2">
+					<h5>{{news.name}}</h5>
+					<div class="media">
+						<img id="toZMT" class="media-object pull-left" :src="news.r_url" alt="" />
+						<div class="media-body">
+							<p class="margin0 fonts12 font-34 lineh16">
+								{{news.r_name}}
+								<i class="icon iconfont icon-yfv font-blue" v-if="(news.ctype==1)||(news.ctype==2)"></i>
+								<i class="icon iconfont icon-yfv colorY" v-if="news.ctype==0"></i>
+							</p>
+							<p class="margin0 lineh22">
+								<span class="leixing pull-left">{{news.newstype_id}}</span>
+								<span class="fonts12 font-8 pull-left">{{news.createTime}}</span>
+							</p>
+						</div>
+					</div>
+					<!--<img v-if="!news.externalUrl" class="width100 margintop2" v-for='img in news.imgUrl' :src="img" alt="新闻图片" />-->
+					<video v-if="news.externalUrl" :src="news.externalUrl" v-for='img in news.imgUrl' controls :poster="img" style="width: 100%;">
+					您的浏览器不支持 video 标签。
+					</video>
+					<img class="width100 margintop2" v-for="img in imgList" :src="img" alt="新闻conent图片" />
+					<p id="conent" class="fonts18">
+						&nbsp;&nbsp;&nbsp;&nbsp;{{news.conent}}
+					</p>
+				</div>
+				<!--<div class="share">
+					<p class="mui-text-center fonts14 font-8">
+						分享到
+					</p>
+					<div class="shareAddress">
+						<a href="javascript:;">
+							<img src="../../img/weixin2.png" alt="微信" />
+							<p>微信好友</p>
+						</a>
+						<a href="javascript:;">
+							<img src="../../img/pyq.png" alt="朋友圈" />
+							<p>微信朋友圈</p>
+						</a>
+						<a href="javascript:;">
+							<img src="../../img/weibo3.png" alt="微博" />
+							<p>新浪微博</p>
+						</a>
+					</div>
+				</div>-->
+			</div>
+			<div class="margint1 recommend bg-white">
+				<p class="fonts14 font-7 mui-text-center margin0 lineh22">相关推荐</p>
+				<ul class="informationList" v-if="lnlist.length!=0">
+					<!--大图-->
+					<li class="bigPicture" v-for="item in lnlist" v-if="item.new_model == 0" :id="item.id">
+						<img class="media-object" v-bind:src="item.imgUrl" alt="新闻图片" />
+						<div class="media-body">
+							<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+								{{item.name}}
+							</p>
+							<p class="time">
+								<!--<span v-if="item.isTop == 1" class="hot">热门</span>-->
+								<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+							</p>
+						</div>
+					</li>
+					<!--三图模式-->
+					<li class="figureThree" v-for="item in lnlist" v-if="item.new_model == 1" :id="item.id">
+						<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+							{{item.name}}
+						</p>
+						<div class="overflow">
+							<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" />
+						</div>
+						<p class="time margin0">
+							<span v-if="item.isTop == 1" class="hot">热门</span>
+							<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+						</p>
+					</li>
+					<!--视频模式-->
+					<li class="video" v-for="item in lnlist" v-if="item.new_model == 3" :id="item.id">
+						<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+							{{item.name}}
+						</p>
+						<div>
+							<img class="width100" :src="item.r_url" alt="视频" style="max-height: 1.96rem;" />
+							<img class="videoIcon" src="../../img/shipin.png" />
+							<!--<span class="inline fonts12 font-f">02:30</span>-->
+						</div>
+						<p class="fonts12 font-9 lineh22 margin0">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</p>
+					</li>
+					<!--个人模式-->
+					<li class="figureNine" v-for="item in lnlist" v-if="item.new_model == 2" :id="item.id">
+						<div class="media">
+							<img class="media-object" :src="item.r_url" alt="用户头像" style="height: 0.5rem;border-radius: 50%;" />
+							<div class="media-body">
+								<p class="fonts15 font-34 lineh22">
+									{{item.r_name}}
+									<i class="icon iconfont icon-yfv colorY fonts18"></i>
+								</p>
+								<span class="fonts12 font-8">{{item.con}}</span>
+							</div>
+						</div>
+						<p id="conent" class="mui-ellipsis-2 fonts16 font-34 zjj1" style="display: block;line-height: 30px;">
+							<!--{{item.conent}}-->
+						</p>
+						<div class="overflow">
+							<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" />
+						</div>
+						<p class="fonts12 font-9 lineh22 margin0">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</p>
+					</li>
+				</ul>
+				
+				<ul class="informationList" v-if="hotList.length!=0">
+					<li class="bigPicture" v-for="item in hotList" v-if="item.new_model == 0" :id="item.id">
+						<img class="media-object" v-bind:src="item.imgUrl" alt="新闻图片" />
+						<div class="media-body">
+							<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+								{{item.name}}
+							</p>
+							<p class="time">
+								<span v-if="item.isTop == 1" class="hot">热门</span>
+								<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+							</p>
+						</div>
+					</li>
+					<!--三图模式-->
+					<li class="figureThree" v-for="item in hotList" v-if="item.new_model == 1" :id="item.id">
+						<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+							{{item.name}}
+						</p>
+						<div class="overflow">
+							<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" />
+						</div>
+						<p class="time margin0">
+							<span v-if="item.isTop == 1" class="hot">热门</span>
+							<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+						</p>
+					</li>
+					<!--视频模式-->
+					<li class="video" v-for="item in hotList" v-if="item.new_model == 3" :id="item.id">
+						<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+							{{item.name}}
+						</p>
+						<div>
+							<img class="width100" :src="item.r_url" alt="视频" style="max-height: 1.96rem;" />
+							<img class="videoIcon" src="../../img/shipin.png" />
+							<!--<span class="inline fonts12 font-f">02:30</span>-->
+						</div>
+						<p class="fonts12 font-9 lineh22 margin0">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</p>
+					</li>
+					<!--个人模式-->
+					<li class="figureNine" v-for="item in hotList" v-if="item.new_model == 2" :id="item.id">
+						<div class="media">
+							<img class="media-object" :src="item.r_url" alt="用户头像" style="height: 0.5rem;border-radius: 50%;" />
+							<div class="media-body">
+								<p class="fonts15 font-34 lineh22">
+									{{item.r_name}}
+									<i class="icon iconfont icon-yfv colorY fonts18"></i>
+								</p>
+								<span class="fonts12 font-8">{{item.con}}</span>
+							</div>
+						</div>
+						<p id="conent" class="mui-ellipsis-2 fonts16 font-34 zjj1">
+							<!--{{item.conent}}-->
+						</p>
+						<div class="overflow">
+							<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" />
+						</div>
+						<p class="fonts12 font-9 lineh22 margin0">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</p>
+					</li>
+				</ul>
+			</div>
+		
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/information/infoDetails.js"></script>
+</html>

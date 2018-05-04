@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>编辑资料</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+				height: 100%;
+			}
+			body,html{
+				background: #fff;
+			}
+			[v-cloak]{
+				display: none;
+			}
+			
+		</style>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/uiFiles.js"></script>
+		<script src="../../js/libs/mui.picker.js"></script>
+		<script src="../../js/libs/mui.poppicker.js"></script>
+	</head>
+	<body>
+		<div id="editDataVM">
+			<header class="font-f">
+				<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+				<span id="center" style="margin-left: -0.3rem;">设置</span>
+			</header>
+			<div id="content" class="margint43 bg-white">
+				<div class="mui-table-view homepageUl">
+					<div id="modifyPassword" class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							修改密码
+						</a>
+					</div>
+				    <div id="signOut" class="mui-table-view-cell">
+				    	<a class="mui-navigate-right">
+							退出登录
+						</a>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../../js/libs/imagecropper/cropper.js"></script>
+<script src="../../js/libs/mustache.min.js"></script>
+<script src="../../js/ctrl/mine/setting.js"></script>

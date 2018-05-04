@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>资讯</title>
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<link rel="stylesheet" href="../../font/iconfont.css"/>
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			body,html{
+				background: #fff;
+				width: 100%;
+				height: 96%;
+			}
+			[v-cloak]{
+				display: none;
+			}
+			.tab{
+				position: fixed;/*inherit*/
+				top:0.43rem;
+				left:0;
+				width:100%;
+				height: .35rem;
+				border-bottom: 1px solid #e6e6e6;
+				z-index: 100;
+				background: #fff;
+				padding: 0;
+				margin: 0;
+			}
+			.tab a{
+				display: inline-block;
+				width: 15%;
+				height: .35rem;
+				line-height: .35rem;
+				text-align: center;
+				color: #434343;
+				font-size: 0.16rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mainVM">
+			<div id="header" class="header font-f" style="display:block;width: 100%;height: .43rem;">
+				<span>资讯</span>
+			</div>
+			<div class="margint43">
+				<!--<div id="slider" class="bg-white">-->
+					<div class="tab" style="">
+						<a id="1" @click="tab(1)" style="color: #3078ff;">全部</a>
+						<a id="商业" @click="tab('商业')">商业</a>
+						<a id="文化" @click="tab('文化')">文化</a>
+						<a id="新闻" @click="tab('新闻')">新闻</a>
+						<a id="体育" @click="tab('体育')">体育</a>
+						<a id="娱乐" @click="tab('娱乐')">娱乐</a>
+					</div>
+					
+					<div id="pullrefresh"  class="mui-scroll-wrapper" style="padding-top : 0.35rem;">
+						<div class="mui-scroll padding0-15">
+							<ul class="informationList" class="mui-table-view mui-table-view-chevron">
+								<li v-for="item in news" :id="item.id" style="width: 100%;">
+									<!--大图模式-->
+									<div class="bigPicture" v-if="item.new_model == 0">
+										<img class="media-object" :src="item.imgUrl" alt="新闻图片" />
+										<div class="media-body">
+											<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24" v-cloak>
+												{{item.name}}
+											</p>
+											<p class="time" v-if="item.isTop == 1">
+												<span class="hot">热门</span>
+												<span class="fonts12 font-9 lineh16">{{item.createTime}}</span>
+											</p>
+											<p class="time" v-if="item.isTop != 1">
+												<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+											</p>
+										</div>
+									</div>
+									<!-- 三图模式 -->
+									<div class="figureThree" v-if="item.new_model == 1">
+										<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+											{{item.name}}
+										</p>
+										<div class="overflow">
+											<img v-for="img in item.imgUrl" :src="img" alt="新闻图片" style="width: 100%;"/>
+										</div>
+										<p class="time" v-if="item.isTop == 1">
+											<span class="hot">热门</span>
+											<span class="fonts12 font-9 lineh16">{{item.createTime}}</span>
+										</p>
+										<p class="time" v-if="item.isTop!=1">
+											<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+										</p>
+									</div>
+									<!--九宫格-->
+									<div class="figureNine" v-if="item.new_model == 2">
+										<div class="media">
+											<img class="media-object" :src="item.r_url" alt="用户头像" style="height: 0.5rem;border-radius: 50%;"/>
+											<div class="media-body">
+												<p class="fonts15 font-34 lineh22">
+													{{item.name}}
+													<i v-if="item.ctype == 0" class="icon iconfont icon-yfv colorY fonts18"></i>
+													<i v-if="item.ctype != 0" class="icon iconfont icon-yfv font-blue fonts18"></i>
+												</p>
+												<span class="fonts12 font-8">{{item.con}}</span>
+											</div>
+										</div>
+										<p class="mui-ellipsis-2 fonts16 font-34 zjj1" style="margin: .1rem 0;">
+											{{item.conent}}
+										</p>
+										<div class="overflow">
+											<img v-for="img in item.imgUrl" :src="img" alt="个人"/>
+										</div>
+										<p class="time" v-if="item.isTop == 1">
+											<span class="hot">热门</span>
+											<span class="fonts12 font-9 lineh16">{{item.createTime}}</span>
+										</p>
+										<p class="time" v-if="item.isTop != 1">
+											<span class="fonts12 font-9 lineh16">{{item.createTime}}</span>
+										</p>
+									</div>
+									<!-- 视频模式 -->
+									<div class="video" v-if="item.new_model == 3">
+										<p class="mui-ellipsis-2 fonts16 font-34 zjj1 lineh24">
+											{{item.name}}
+										</p>
+										<div>
+											<img :src="item.imgUrl" alt="视频" style="width: 100%;"/>
+											<img class="videoIcon" src="../../img/shipin.png"/>
+										</div>
+										<p class="time" v-if="item.isTop == 1">
+											<span class="hot">热门</span>
+											<span class="fonts12 font-9 lineh16">{{item.createTime}}</span>
+										</p>
+										<p class="time" v-if="item.isTop != 1">
+											<span class="fonts12 font-9 lineh16">{{item.r_name}}&nbsp;&nbsp;{{item.createTime}}</span>
+										</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<img v-if='news.length==0' src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>
+					<!--<div class="mui-text-center bg-body">
+						<p class="fonts14 font-blue lineh38"><span class="mui-icon mui-icon-arrowdown fonts18"></span>上拉加载更多</p>
+					</div>-->
+				<!--</div>-->
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../../js/loading.js"></script>
+<script src="../../js/ctrl/information/information.js"></script>

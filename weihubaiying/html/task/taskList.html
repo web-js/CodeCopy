@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>我的任务</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			html,body{height: 100%;}
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+	</head>
+	<body class="bg-body">
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mainVM">
+			<header id="taskListHead" class="font-f" style="display: none;">
+				<a id="back" class="back mui-icon mui-icon-back pull-left font-f" href="javascript:;" style="line-height: 0.43rem;margin-left: 0.1rem;font-size: 0.2rem!important;"></a>
+				<span id="center" style="margin-left: -0.3rem;">我的任务</span>
+			</header>
+			<div id="listBox" class="taskListDiv" style="top: 0;">
+				<div class="bg-white taskList-tab" style="position: fixed;z-index: 100;">
+					<div id="taskStateList" class="bg-white mui-slider-indicator borderB mui-segmented-control mui-segmented-control-inverted padding0-15">
+						<a class="mui-control-item" v-for="item in taskState" :data-status="item.status" :class="currentPage==item.id? 'mui-active' : ''" v-cloak>
+							{{item.name}}
+						</a>
+					</div>
+				</div>
+				<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="top: 0.43rem;" v-cloak>
+					<div class="mui-scroll padding0-15 mui-slider-group">
+						<ul class="taskList mui-table-view mui-table-view-chevron" style="margin-top: 0.05rem;background: transparent;">
+							<div v-for="item in task_own" >
+								<li class="success marginb1 boxs-h bg-white" :id="item.id" v-if="item.st!=2">
+									<a class="media" href="javascript:;">
+										<img class="media-object" :src="item.imgUrl" alt="任务图标"/>
+										<div class="media-body">
+											<p class="fonts14 lineh16 margin0">
+												<span class="font-28 mui-ellipsis" v-cloak>{{item.name}}</span>
+												<span class="font-blue pull-right" v-cloak>{{item.bonus}}积分</span>
+											</p>
+											<p class="fonts14 lineh16" style="margin: 0.18rem 0 0;">
+												<span v-if="item.st==0" class="font-blue"><!--0进行中1待审核2已结束3通过4未通过-->
+													进行中
+												</span>
+												<span v-if="item.st==1" class="font-blue"><!--0进行中1待审核2已结束3通过4未通过-->
+													待审核
+												</span>
+												<span v-if="item.st==3" class="font-blue"><!--0进行中1待审核2已结束3通过4未通过-->
+													审核通过
+												</span>
+												<span v-if="item.st==4" class="font-blue"><!--0进行中1待审核2已结束3通过4未通过-->
+													审核未通过
+												</span>
+												<!--任务类型-->
+												<span v-if="item.task_type == '0'" class="pull-right fonts10 font-8">
+													<img src="../../img/zhuanfa.png" alt="" />
+													<!--<img src="../../img/gongyi.png" alt="" />-->
+													转发互动
+												</span>
+												<span v-if="item.task_type == '1'" class="pull-right fonts10 font-8">
+													<img src="../../img/pingtai.png" alt="" />
+													注册下载
+												</span>
+												<span v-if="item.task_type == '2'" class="pull-right fonts10 font-8">
+													<img src="../../img/yuedu.png" alt="" />
+													其他
+												</span>
+											</p>
+										</div>
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</a>
+								</li>
+								<!--已结束-->
+								<li class="end marginb1 boxs-h bg-white" v-if="item.st==2">
+									<a class="media" href="javascript:;">
+										<img class="media-object" :src="item.imgUrl" alt="任务图标"/>
+										<div class="media-body">
+											<p class="fonts14 lineh16 margin0">
+												<span class="font-28 mui-ellipsis" v-cloak>{{item.name}}</span>
+												<span class="font-blue pull-right" v-cloak>{{item.bonus}}积分</span>
+											</p>
+											<p class="fonts14 lineh16" style="margin: 0.18rem 0 0;">
+												<span class="font-blue"><!--0进行中1待审核2已结束3通过4未通过-->
+													已结束
+												</span>
+												
+												<!--任务类型-->
+												<span v-if="item.task_type == '0'" class="pull-right fonts10 font-8">
+													<img src="../../img/zhuanfa.png" alt="" />
+													转发互动
+												</span>
+												<span v-if="item.task_type == '1'" class="pull-right fonts10 font-8">
+													<img src="../../img/pingtai.png" alt="" />
+													注册下载
+												</span>
+												<span v-if="item.task_type == '2'" class="pull-right fonts10 font-8">
+													<img src="../../img/yuedu.png" alt="" />
+													其他
+												</span>
+											</p>
+										</div>
+										<span class="mui-icon mui-icon-arrowright"></span>
+									</a>
+								</li>
+							</div>
+						</ul>
+						<!--<p class="font-6 fonts14 lineh4 mui-text-center" v-cloak>{{description}}</p>-->
+						<img v-if='task_own.length==0' src="../../img/wujilu.png" alt="暂无记录" style="position: absolute;top:1.03rem;left:calc(50% - 1.03rem);width: 2.06rem;height: 2.435rem;"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/task/taskList.js"></script>
+	<script src="../../js/loading.js"></script>
+</html>

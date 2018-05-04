@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>审核状态</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+		</style>
+	</head>
+	<body class="bg-white">
+		<header class="font-f">
+			<a id="back" class="mui-action-back mui-icon mui-icon-back pull-left font-f" href="javascript:;"></a>
+			<span id="center" style="margin-left: -0.3rem;">审核状态</span>
+		</header>
+		<div class="margint43">
+			<!--审核通过-->
+			<div class="success examineDiv">
+				<img src="../../img/success.png" alt="审核通过" />
+				<p class="fonts14 font-6 lineh4 margin0">恭喜，您的审核已通过！</p>
+				<span class="fonts13 font-b2 lineh22">快去完成任务挖掘你在微呼百应的第一桶金吧！</span>
+				<div class="padding0-15">
+					<button class="btn font-f bg-bule fonts18 boxs">去赚钱</button>
+				</div>
+			</div>
+			<!--审核未通过-->
+			<div class="fail examineDiv">
+				<img src="../../img/fail.png" alt="审核未通过" />
+				<p class="fonts14 font-6 lineh4 margin0">抱歉，您的申请审核未通过！</p>
+				<span class="fonts13 font-b2 lineh22">未通过原因为粉丝数量与截图数量不统一</span><br />
+				<span class="fonts13 font-b2 lineh18">如有问题请咨询客服13345123201</span>
+				<div class="padding0-15">
+					<button class="btn font-f bg-bule fonts18 boxs">重新申请</button>
+				</div>
+			</div>
+			<div class="submit examineDiv">
+				<img src="../../img/tijiao.png" alt="提交成功" />
+				<p class="fonts14 font-6 lineh4 margin0">提交成功，请等待管理员审核！</p>
+				<span class="fonts13 font-b2 lineh19">预计2-3个工作日完成审核，审核结果会致电或发送信息至您注册的手机号码，请耐心等待</span>
+				<div class="padding0-15">
+					<button class="btn font-f bg-bule fonts18 boxs">关闭</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+</html>
+<script>
+function is_weixin(){
+ 	var ua = navigator.userAgent.toLowerCase();
+	if (ua.match(/MicroMessenger/i) == "micromessenger") {//如果在微信浏览器端
+		document.getElementById('back').style.display="none";
+		document.getElementById('center').style.marginLeft=0;
+	} else {
+	 	return false;
+	}
+}
+is_weixin();
+</script>

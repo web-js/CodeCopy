@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>身份认证</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/libs/mui.picker.js"></script>
+		<script src="../../js/libs/mui.poppicker.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/mui.picker.css" />
+		<link rel="stylesheet" href="../../css/mui.poppicker.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			html,body{height: 100%;}
+			[v-cloak]{
+				display: none;
+			}
+		</style>
+	</head>
+	<body class="bg-white">
+		<div id="shenfenVM" v-cloak>
+			<header id="header" class="font-f">
+				<a class="mui-icon mui-icon-back pull-left font-f back" href="javascript:;" style="line-height: 0.43rem;margin-left: 0.1rem;font-size: 0.2rem!important;"></a><!--mui-action-back -->
+				<span style="margin-left: -0.3rem;">身份认证</span>
+			</header>
+			<div id="content" class="margint43 ">
+			<!--身份认证  --  第二部-->
+				<div id="secondSteps">
+					<div class="jindu border_b">
+						<span class="fonts14">1 基本资料</span><i class="mui-icon mui-icon-arrowright fonts14 font-8"></i>
+						<span class="fonts14 active">2 社交账号</span><i class="mui-icon mui-icon-arrowright fonts14 font-8"></i>
+						<span class="fonts14">3 审核中</span>
+					</div>
+					<div class="padding0-15">
+						<p class="lineh48 border_b fonts15 font-34 margin0">社交账号 <span class="fonts15 font-8">（微信必选）</span></p>
+						<ul class="sjzh">
+							<li id="weixin">
+								<div class="weixin">
+									<img src="../../img/weixin.png" alt="微信" />
+								</div>
+								<p class="fonts15 font-34">微信</p>
+							</li>
+							<li id="weibo">
+								<div class="xlwb">
+									<img src="../../img/xlwb.png" alt="微博" />
+								</div>
+								<p class="fonts15 font-34">微博</p>
+							</li>
+							<li id="qqkongjian">
+								<div class="QQkj">
+									<img src="../../img/kongjian.png" alt="QQ空间" />
+								</div>
+								<p class="fonts15 font-34">QQ空间</p>
+							</li>
+							<li id="baidutieba">
+								<div class="bdtb">
+									<img src="../../img/bdtb.png" alt="百度贴吧" style="width: 0.28rem;"/>
+								</div>
+								<p class="fonts15 font-34">百度贴吧</p>
+							</li>
+							<li id="taobao">
+								<div class="tb">
+									<img src="../../img/taobao.png" alt="淘宝" />
+								</div>
+								<p class="fonts15 font-34">淘宝</p>
+							</li>
+						</ul>
+						<button class="btn font-f bg-bule fonts18 boxs margintop2">提交</button>
+					</div>
+				</div>
+			</div>
+			<div class="imgLoading" >
+				<div class="loader">
+					<span class="loading">上传图片中，请等待...</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/ctrl/renzheng/shenfen2.js"></script>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>身份认证</title>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/imagecropper/cropper.css" />
+		<link rel="stylesheet" href="../../css/imagecropper/main.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/mui.picker.css" />
+		<link rel="stylesheet" href="../../css/mui.poppicker.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			[v-cloak]{
+				display: none;
+			}
+			/*html,body{height: 100%;}*/
+			.mui-navigate-right:after, .mui-push-right:after{
+				right: 0;
+			}
+		</style>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/common/uiFiles.js"></script>
+		<script src="../../js/libs/mui.picker.js"></script>
+		<script src="../../js/libs/mui.poppicker.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/libs/imagecropper/main.js"></script>
+	</head>
+	<body class="bg-white">
+		<div id="shenfenVM" v-cloak>
+			<header id="header" class="font-f">
+				<a class="mui-icon mui-icon-back pull-left font-f back" href="javascript:;" style="line-height: 0.43rem;margin-left: 0.1rem;font-size: 0.2rem!important;"></a><!--style="line-height: 0.43rem;margin-left: 0.1rem;font-size: 0.2rem!important;"-->
+				<span style="margin-left: -.3rem;">身份认证</span>
+			</header>
+			<div id="content" class="margint43 ">
+			<!--身份认证 --第一步-->
+				<div id="firstStep">
+					<div class="jindu border_b">
+						<span class="fonts14 active">1 基本资料</span><i class="mui-icon mui-icon-arrowright fonts14 font-8"></i>
+						<span class="fonts14">2 社交账号</span><i class="mui-icon mui-icon-arrowright fonts14 font-8"></i>
+						<span class="fonts14">3 审核中</span>
+					</div>
+					<div class="padding0-15" >
+						<ul class="mui-table-view sfrzUl">
+						    <li class="mui-table-view-cell">
+						        <ul id="file-list" class="mui-list-unstyled">
+									<li class="addPhoto" style="position:relative;">
+										<div id="headImage" class="mui-navigate-right" style="line-height: 0.75rem;">头像
+											<img v-if="zmtInfo.headimgurl==''||zmtInfo.headimgurl==undefined" id="changeHeadImg" class="pull-right" src="../../img/grzmt1.png" style="position:absolute;top:0;right:0.03rem;width: 0.6rem!important;height:0.6rem;border-radius: 50%;margin: 0.08rem 0.16rem 0 0!important;"/>
+											<img v-else id="changeHeadImg" class="pull-right" :src="zmtInfo.headimgurl" style="position:absolute;top:0;right:0.03rem;width: 0.6rem!important;height:0.6rem;border-radius: 50%;margin: 0.08rem 0.16rem 0 0!important;"/>
+											<input type="file" id="chooseImgFromGalleryFile" class="minSize" />
+										</div>
+									</li>
+					    		</ul>
+						    </li>
+						    <li class="mui-table-view-cell">
+						        <a class="mui-navigate-right">昵称
+						        	<input v-if="zmtInfo.name==''||zmtInfo.name==undefined" id="nick_name" class="text pull-right paddingr0 mui-text-right fonts14 font-9" v-model="zmtInfo.name" type="text" maxlength="7" placeholder="请输入昵称" style="font-size:0.15rem!important;color: #888;margin-right: 0.2rem;"/>
+						        	<input v-else id="nick_name" class="text pull-right paddingr0 mui-text-right fonts14 font-9" v-model="zmtInfo.name" type="text" maxlength="7" style="font-size:0.15rem!important;color: #888;margin-right: 0.2rem;"/>
+						        </a>
+						    </li>
+						    <li class="mui-table-view-cell">
+						        <a id='showCityPicker3' class="mui-navigate-right">地区
+						        	<span v-if="zmtInfo.region==undefined||zmtInfo.region==''" v-model="data.region" id="cityResult3" class="pull-right">点击选择地区</span>
+						        	<span v-else v-model="data.region" id="cityResult3" class="pull-right" v-cloak>{{zmtInfo.region}}</span>
+						        </a>
+						    </li>
+						    <li class="mui-table-view-cell">
+						        <a id="showUserPicker" class="mui-navigate-right">性别
+						        	<span v-if="zmtInfo.sex==''||zmtInfo.sex==undefined" class="pull-right" id="userResult">点击选择性别</span>
+						        	<span v-else class="pull-right" id="userResult" v-cloak>{{zmtInfo.sex}}</span>
+						        </a>
+						    </li>
+						    <li class="mui-table-view-cell">
+						        <a id="identityChoice" class="mui-navigate-right">身份
+						        	<span v-if="zmtInfo.identity==undefined" id="identity" class="pull-right" v-cloak>{{identity||'点击选择身份'}}</span>
+						        	<span v-else id="identity" class="pull-right" v-cloak>{{identity||zmtInfo.identity}}</span>
+						        </a>
+						    </li>
+						    <li class="mui-table-view-cell lineh49 fonts15">
+						       	 自我介绍
+						    </li>
+						    <!--<textarea v-if="zmtInfo.introduce==''||zmtInfo.introduce==undefined" id="sf_textarea" value class="margin0 padding0 fonts15 font-34" maxlength="20" rows="4"/>最多20字</textarea>-->
+						    <textarea id="sf_textarea" value class="margin0 padding0 fonts15 font-34" maxlength="20" rows="4"/ v-cloak>{{zmtInfo.introduce}}</textarea><!--v-else-->
+						</ul>
+						<button @click="submitForm()" class="btn font-f bg-bule fonts18 boxs margintop3 marginb1">下一步</button><!--id="nextStep1"-->
+					</div>
+				</div>
+				<div id="identityDiv" class="identityDiv mui-hidden">
+					<ul class="rzUl">
+					    <li class="active"><span>高级白领</span></li>
+					    <li><span>技术IT</span></li>
+					    <li><span>企业老板</span></li>
+					    <li><span>销售精英</span></li>
+					    <li><span>媒体记者</span></li>
+					    <li><span>宝妈辣妈</span></li>
+					    <li><span>行政人资</span></li>
+					    <li><span>营销策划</span></li>
+					    <li><span>美编设计</span></li>
+					    <li><span>文案作者</span></li>
+					    <li><span>财务审计</span></li>
+					    <li><span>快递配送</span></li>
+					    <li><span>服务礼仪</span></li>
+					    <li><span>美容健身</span></li>
+					    <li><span>配送快递</span></li>
+					    <li><span>酒店管理</span></li>
+					    <li><span>技工生产</span></li>
+					    <li><span>培训教育</span></li>
+					    <li><span>金融保险</span></li>
+					    <li><span>医疗环保</span></li>
+					    <li><span>建筑物业</span></li>
+					    <li><span>高校学生</span></li>
+					    <li><span>中小学生</span></li>
+					    <li><span>自由职业</span></li>
+					    <li><span>代购微商</span></li>
+					    <li><span>淘宝买手</span></li>
+					    <li><span>其他</span></li>
+					</ul>
+					<div class="padding0-15">
+						<button id="identitySelection" class="btn font-f bg-bule fonts18 boxs margint1">确认</button>
+					</div>
+				</div>
+			</div>
+		<!--弹窗-->
+			<div id="sf_popup" class="modelDiv" style="display: block;"><!--v-if="userInfo.identity==undefined"-->
+				<div class="tcDiv bg-white">
+					<img src="../../img/timg.png" alt="" />
+					<p class="fonts12 font-6">1、头像、昵称会在你的个人媒体主页展示，酷炫的头像和昵称会让你提高你的影响力~</p>
+					<p class="fonts12 font-6">2、审核通过之后修改资料需要重新提交申请，但不应影响原有资料的展示。</p>
+					<button class="btn font-f bg-bule fonts18 boxs margintop2">朕知道了</button>
+				</div>
+				<div class="modelClose">
+					
+				</div>
+			</div>
+			<div class="imgLoading" >
+				<div class="loader">
+					<span class="loading">上传图片中，请等待...</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+
+
+<script src="../../js/libs/city.data.js"></script>
+<script src="../../js/libs/city.data-3.js"></script>
+<script src="../../js/libs/imagecropper/bootstrap.js"></script>
+
+<script src="../../js/mui.previewimage.js" type="text/javascript"></script>
+<script src="../../js/plupload/moxie.js" type="text/javascript"></script>
+<script src="../../js/plupload/plupload.dev.js" type="text/javascript"></script>
+<script src="../../js/plupload/qiniu.js" type="text/javascript"></script>
+<script src="../../js/plupload/CryptoJS.js" type="text/javascript"></script>
+<script src="../../js/base64.js" type="text/javascript"></script>
+
+<script src="../../js/ctrl/renzheng/shenfen.js"></script>
+

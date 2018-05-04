@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+		<title>微呼百应</title>
+		<link rel="stylesheet" type="text/css" href="../css/loading.css"/>
+		<script src="../js/vue.min.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common/init.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="../font/iconfont.css" />
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			[v-cloak]{
+				display: none;
+			}
+			.mui-search .mui-placeholder .mui-icon{
+				margin-right: 0.05rem;
+			}
+			.mui-search .mui-placeholder{
+				margin-top: 0.01rem;
+			}
+		</style>
+	</head>
+	<body class="bg-body mui-content">
+		<div class="center" id="loading">
+			<div class="loadEffect">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div id="mainVM" class="mui-scroll-wrapper" v-cloak>
+			<div class="mui-scroll">
+				<div id="slider" class="mui-slider" v-if="ladv.length!=0">
+					<div class="mui-slider-group mui-slider-loop">
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a class="ladvLink" :id="ladv[ladv.length-1].id" :name='ladv[ladv.length-1].activity' :href='ladv[ladv.length-1].href'>
+								<img class="imgList" :src="ladv[ladv.length-1].image">
+							</a>
+						</div>
+						<div class="mui-slider-item" v-for="item in ladv">
+							<a class="ladvLink" :name="item.activity" :id='item.id' :href="item.href">
+								<img :src="item.image">
+							</a>
+						</div>
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a class="ladvLink" :href="ladv[0].href" :name="ladv[0].activity" :id="ladv[0].id">
+								<img :src="ladv[0].image">
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="navDiv bg-white">
+					<div class="search bg-white boxs-3 overflow">
+						<form action="" method="post">
+							<div class="mui-input-row mui-search fonts14 pull-left">
+								<input v-model="searchMsg" type="search" class="pull-left mui-input-clear fonts14" @keydown="searchMsg1(event)" placeholder="查找名人、平台、个人自媒体"/>
+							</div>
+						</form>				
+						<div id="messageHints" class="pull-right">
+							<img :src="false?'../img/xiaoxi1.png':'../img/xiaoxi.png'" alt="" style="margin: 0.1rem 0.05rem 0 0;"/>
+							<span class="notice" v-if="redInfo!=0" style="position: absolute;top: 10px;right: 17px;"></span>
+						</div>
+					</div>
+					<div class="bg-white overflow" style="padding-top: 0.355rem;">
+						<a name="0" class="mainJump">
+							<p class="margin0"><img src="../img/navimg1.png"/></p>
+							<p class="fonts12">找名人</p>
+						</a>
+						<a name="1" class="mainJump">
+							<p class="margin0"><img src="../img/navimg2.png"/></p>
+							<p class="fonts12">找媒体</p>
+						</a>
+						<a class="mainJump2">
+							<p class="margin0"><img src="../img/navimg3.png"/></p>
+							<p class="fonts12">找圈子</p>
+						</a>
+						<a class="wxy">
+							<p class="margin0"><img src="../img/navimg4.png"/></p>
+							<p class="fonts12">微响应
+							<img src="../img/hot.png" alt="热搜" />
+							</p>
+						</a>
+					</div>
+					<div class="toutiao borderT borderB">
+						<img class="pull-left" src="../img/toutiao.png" alt="" />
+						<div class="rollingNotice" id="rollingNotice">
+							<ul class="fonts12 font-8" id="rollingNotice">
+								<li v-for="item in news" :id="item.id">
+									<span class="marquee-span">热门</span>
+									<p style="display: inline-block;width: 80%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" class="margin0" v-cloak>{{item.name}}</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="zmr bg-white margint1"><!--overflow-->
+					<div class="title pull-left">
+						找名人
+						<a name="0" class="mediaList pull-right fonts14 font-6">更多 &gt;</a>
+					</div>
+					<ul class="zmrUl">
+						<li v-for="item in mingrenList" :id="item.id">
+							<img :src="item.big_url" alt="" style="width:100%;height: 1.2rem;"/>
+							<div style="display:block;margin:-0.02rem 0 0.01rem;">
+								<p class="fonts12 inline font-34 lineh24 margin0 zjj1 mui-ellipsis" v-cloak>{{item.nickName}}</p>
+								<i class="icon iconfont icon-yfv colorY"></i><!--overflow-->
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--找媒体-->
+				<div class="zmt bg-white borderB margint1"><!--overflow-->
+					<div class="title pull-left">
+						找媒体
+						<a name="1" class="mediaList pull-right fonts14 font-6">更多 &gt;</a>
+					</div>
+					<div class="mui-slider zmtDiv noInterval">
+						<div class="mui-slider-group">
+							<div class="mui-slider-item" v-for="list in mediaListArr">
+								<ul class="zmtDivui" style="padding:0 0 0 0.1rem"> 
+									<li class="mui-text-center boxs-3" v-for="item in list" :id="item.id">
+										<div class="mui-text-center">
+											<img class="width100" :src="item.headUrl"/>
+											<img class="lanV" v-if="(item.cat_type == 1)||(item.cat_type == 2)" src="../img/lanv.PNG"/><!--0 名人 1自媒体 2 个人自媒体-->
+											<i v-if="item.cat_type == 0" class="icon iconfont icon-yfv colorY"></i>
+										</div>							
+										<p class="font-34 fonts12" v-cloak>{{item.nickName}}</p>
+										<div class="bq" ><!--overflow-->
+											<span class="pull-left font-8" v-for="item in mediaList.service_label" v-cloak>{{item}}</span>
+											<span class="pull-left font-8 fonts9" v-for="(item,index) in item.service_label" v-if="index<=3" style="display:block;width:50%;text-align: center;" v-cloak>{{item}}</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="mui-slider-indicator">
+							<div class="mui-indicator" v-for="(list,index) in mediaListArr" :class="{'mui-active':index==0}" v-if="mediaListArr.length>1" ></div>
+							
+						</div>
+					</div>
+				</div>
+				<!--找圈子-->
+				<div class="zqz bg-white borderB margint1"><!--overflow-->
+					<div class="title pull-left">
+						找圈子
+						<a id="toCircle" class="pull-right fonts14 font-6">更多 &gt;</a>
+					</div>
+					<div>
+						<ul class="zqzDivui" style="overflow: hidden;"><!--overflow-->
+							<li class="mui-text-center boxs-3" v-for="item in Z_mediaList" :id="item.id">
+								<div class="mui-text-center">
+									<img class="width100" :src="item.headimage_url"/>
+								</div>							
+								<p class="font-34 fonts12" v-cloak>{{item.nick_name}}</p>
+								<div class="bq font0 lineh0"><!--overflow-->
+									<span class="font-8 fonts10" v-for="(val,item) in item.keyword" v-if='item<4'>#{{val}}</span>
+								</div>
+							</li>
+						</ul>
+					</div>				
+				</div>
+				<div class="nlzzm">
+					<img class="width100" src="../img/shouyetg.png"/>
+					<a id="joinMedia">我来试试</a>
+				</div>
+				<div class="searchList" :class="{'active':lr.length != 0||lm.length!=0||searType}">
+				<ul class="bg-body padding0-15 lmUl">
+					<p v-if="lm.length = 0" class="fonts14 lineh28 font-3 margin0">个人自媒体</p>
+					<li class="mtList bg-white boxs-h" v-for="item in lm" :id="item.id">
+						<div class="mui-media"><!--overflow-->
+							<img class="mui-media-object pull-left" :src="item.headimage_url" alt="媒体头像" />
+							<div class="mui-media-body pull-left">
+								<p class="fonts15 font-34 lineh24 margin0" v-cloak>{{item.nick_name}}
+									<span v-if="item.identify == 1" class="yrz">
+										<i class="icon iconfont icon-v"></i>
+										已认证
+									</span>
+								</p>
+								<span class="fonts12 font-8 lineh24 mui-ellipsis" v-cloak>{{item.content}}</span>
+							</div>
+							<span class="pull-right leixing">{{item.identify}}</span>
+						</div>
+					</li>
+				</ul>
+				<ul class="bg-body padding0-15 searchUl">
+					<p v-if="lr.length = 0" class="fonts14 lineh28 font-3 margin0">名人、自媒体</p>
+					<li class="mtList bg-white boxs-h" v-for="item in lr" :id="item.id">
+						<div class="mui-media"><!--overflow-->
+							<img class="mui-media-object pull-left" :src="item.big_url" alt="媒体头像" />
+							<div class="mui-media-body pull-left">
+								<p class="fonts15 font-34 lineh24 margin0">{{item.nickName}}
+									<!--<i  class="icon iconfont icon-yfv font-blue"></i>-->
+									<!--<i v-if="item.cat_type == 0" class="icon iconfont icon-yfv colorY"></i>-->
+								</p>
+								<span class="fonts12 font-8 lineh24 mui-ellipsis">{{item.content}}</span>
+							</div>
+							<span class="pull-right leixing">{{item.zixunName}}</span>
+						</div>
+						<!--<div class="biaoqian">-->
+							<!--<span v-for="item in allmingrenList.service_label">{{item}}</span>
+							<span v-for="(item,index) in item.service_label">{{item}}</span>-->
+						<!--</div>-->
+					</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</body>
+	<script src="../js/loading.js"></script>
+	<script src="../js/ctrl/main.js"></script>
+</html>

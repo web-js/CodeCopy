@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>登录</title>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common/init.js"></script>
+		<script src="../../js/jquery-3.1.1.min.js"></script>
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../font/iconfont.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<style type="text/css">
+			html{
+				font-size: 26.67vw;
+			}
+		</style>
+	</head>
+	<body class="bg-white">
+		<div class="LOGO mui-text-center">
+			<img class="width100" src="../../img/logo.png" alt="LOGO" />
+		</div>
+		<div class="loginDiv shuru" id="login-form">
+			<div class="zh">
+				<label class="fonts15 font-34" for="">账号</label>
+				<input id="u-nane" class="login fonts15 font-34" v-model="name" type="text" placeholder="请输入您的账号"/>
+			</div>
+			<div class="zh">
+				<label class="fonts15 font-34" for="">密码</label>
+				<input class="fonts15 font-34 login" v-model="password" type="password" placeholder="请输入您的密码"/>
+			</div>
+			<div class="check-box lineh4" style="margin-bottom: 0.15rem;">
+				<span>
+					<input type="checkbox" name="" id="checkBox" value="" />
+					<label for="checkBox" class="fonts13 font-8" style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;记住账号</label>
+				</span>
+				<a id="toForget" class="fonts13 font-8 pull-right">忘记密码？</a>
+			</div>
+			<button @click="submitForm" type="button" class="btn font-f bg-bule fonts18 boxs"/>登录</button>
+			<p class="mui-text-center fonts15 lineh48 margint1">没有微呼百应号？
+				<a id="toRegister">去注册</a>
+			</p>
+		</div>
+	</body>
+	<script src="../../js/ctrl/login/login.js"></script>
+</html>
